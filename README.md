@@ -1,0 +1,1 @@
+maven上传构建，jenkins自动构建
