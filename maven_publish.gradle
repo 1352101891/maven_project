@@ -1,0 +1,31 @@
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+    from 'src/main/java'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'com.example'//公司域名
+                artifactId = 'mylibrary'//该aar包的名称
+                version = rootProject.ext.versionName//版本号
+                from components.release
+            }
+        }
+
+        repositories {
+            maven {
+                name = 'myRepo'
+                url = "http://localhost:8081/repository/maven-releases/"
+                credentials {
+                    username 'admin'
+                    password 'admin'
+                }
+            }
+        }
+    }
+}

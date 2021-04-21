@@ -1,0 +1,5 @@
+include ':mylibrary'
+include ':gson-2.2.4'
+include ':lib'
+include ':app'
+rootProject.name = "My Application"
