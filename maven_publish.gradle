@@ -11,7 +11,7 @@ afterEvaluate { project ->
         publications {
             release(MavenPublication) {
                 groupId = 'com.example'//公司域名
-                artifactId = 'mylibrary'//该aar包的名称
+                artifactId = 'lvlibrary'//该aar包的名称
                 version = project.android.defaultConfig.versionName//版本号
                 from components.release
             }
