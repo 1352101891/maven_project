@@ -6,13 +6,13 @@ task sourcesJar(type: Jar) {
     from 'src/main/java'
 }
 
-afterEvaluate {
+afterEvaluate { project ->
     publishing {
         publications {
             release(MavenPublication) {
                 groupId = 'com.example'//公司域名
                 artifactId = 'mylibrary'//该aar包的名称
-                version = rootProject.ext.versionName//版本号
+                version = project.android.defaultConfig.versionName//版本号
                 from components.release
             }
         }
