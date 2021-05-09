@@ -12,7 +12,7 @@ android {
             if (variant.buildType.name != "debug") {
                 variant.packageApplication.outputDirectory = new File(project.rootDir.absolutePath + "/app/output")
             }
-            outputFileName = "${rootProject.ext.applicationId}_${variant.flavorName}_${variant.buildType.name}.apk"
+            outputFileName = "${rootProject.ext.applicationId}_${variant.flavorName}_${variant.buildType.name}_${project.android.defaultConfig.versionName}.apk"
         }
     }
 
@@ -20,8 +20,8 @@ android {
         applicationId rootProject.ext.applicationId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        versionCode project.hasProperty('VERSION_CODE') ? Integer.parseInt(VERSION_CODE) : rootProject.ext.versionCode
+        versionName project.hasProperty('VERSION_NAME') ? VERSION_NAME : rootProject.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
