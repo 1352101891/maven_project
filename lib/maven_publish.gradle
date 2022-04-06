@@ -1,0 +1,45 @@
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+    from 'src/main/java'
+}
+
+afterEvaluate { project ->
+    publishing {
+        publications {
+            library(MavenPublication) {
+                groupId = 'com.example'//公司域名
+                artifactId = 'lib'//该aar包的名称
+                version = '1.0.1'//版本号
+                from components.java
+//新的maven插件，已经支持自动添加dependencies依赖的配置库
+                // 如果依赖比较多，有个更简洁的方式就是读取配置的依赖配置，逐一添加。这种方法在依赖变更之后，也会自动识别，如下所示
+//                pom.withXml{
+//                    def dependenciesNode = asNode().appendNode("dependencies")
+//                    configurations.implementation.allDependencies.forEach(){
+//                        Dependency dependency ->
+//                            if (dependency.version != "unspecified" && dependency.name != "unspecified"){
+//                                def dependencyNode = dependenciesNode.appendNode('dependency')
+//                                dependencyNode.appendNode('groupId', dependency.group)
+//                                dependencyNode.appendNode('artifactId', dependency.name)
+//                                dependencyNode.appendNode('version', dependency.version)
+//                            }
+//                    }
+//                }
+            }
+        }
+
+        repositories {
+            maven {
+                name = 'myRepo'
+                url = "http://localhost:8081/repository/maven-releases/"
+                credentials {
+                    username 'admin'
+                    password 'admin'
+                }
+            }
+        }
+    }
+}
